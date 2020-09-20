@@ -143,9 +143,9 @@ func initDB() {
 
 	// 设置数据库连接信息
 	config := mysql.Config{
-		User:                 "homestead",
+		User:                 "root",
 		Passwd:               "secret",
-		Addr:                 "127.0.0.1:33060",
+		Addr:                 "127.0.0.1:3306",
 		Net:                  "tcp",
 		DBName:               "goblog",
 		AllowNativePasswords: true,
@@ -156,7 +156,7 @@ func initDB() {
 	checkError(err)
 
 	// 设置最大连接数
-	db.SetMaxOpenConns(25)
+	db.SetMaxOpenConns(100)
 	// 设置最大空闲连接数
 	db.SetMaxIdleConns(25)
 	// 设置每个链接的过期时间
