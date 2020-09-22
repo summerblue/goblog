@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 	"text/template"
 	"time"
@@ -35,10 +36,43 @@ func notFoundHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "<h1>请求页面未找到 :(</h1><p>如有疑惑，请联系我们。</p>")
 }
 
+// Article  对应一条文章数据
+type Article struct {
+	Title, Body string
+	ID          int64
+}
+
 func aritlcesShowHandler(w http.ResponseWriter, r *http.Request) {
+
+	// 1. 获取 URL 参数
 	vars := mux.Vars(r)
 	id := vars["id"]
-	fmt.Fprint(w, "文章 ID："+id)
+
+	// 2. 读取对应的文章数据
+	article := Article{}
+	query := "SELECT * FROM articles WHERE id = ?"
+	err := db.QueryRow(query, id).Scan(&article.ID, &article.Title, &article.Body)
+
+	// 3. 如果出现错误
+	if err != nil {
+		if err == sql.ErrNoRows {
+			// 3.1 数据未找到
+			w.WriteHeader(http.StatusNotFound)
+			fmt.Fprint(w, "404 文章未找到")
+		} else {
+			// 3.2 数据库错误
+			checkError(err)
+		}
+	} else {
+		// 4. 读取成功，显示文章
+		tmpl, err := template.ParseFiles("resources/views/articles/show.gohtml")
+		if err != nil {
+			checkError(err)
+		}
+
+		tmpl.Execute(w, article)
+	}
+
 }
 
 func aritlcesIndexHandler(w http.ResponseWriter, r *http.Request) {
@@ -75,11 +109,12 @@ func aritlcesStoreHandler(w http.ResponseWriter, r *http.Request) {
 
 	// 检查是否有错误
 	if len(errors) == 0 {
-		fmt.Fprint(w, "验证通过!<br>")
-		fmt.Fprintf(w, "title 的值为: %v <br>", title)
-		fmt.Fprintf(w, "title 的长度为: %v <br>", utf8.RuneCountInString(title))
-		fmt.Fprintf(w, "body 的值为: %v <br>", body)
-		fmt.Fprintf(w, "body 的长度为: %v <br>", utf8.RuneCountInString(body))
+		lastInsertID, err := saveArticleToDB(title, body)
+		if lastInsertID > 0 {
+			fmt.Fprint(w, "插入成功，ID 为"+strconv.FormatInt(lastInsertID, 10))
+		} else {
+			checkError(err)
+		}
 	} else {
 
 		storeURL, _ := router.Get("articles.store").URL()
@@ -97,6 +132,40 @@ func aritlcesStoreHandler(w http.ResponseWriter, r *http.Request) {
 
 		tmpl.Execute(w, data)
 	}
+}
+
+func saveArticleToDB(title string, body string) (int64, error) {
+
+	// 变量初始化
+	var (
+		id   int64
+		err  error
+		rs   sql.Result
+		stmt *sql.Stmt
+	)
+
+	// 1. 获取一个 prepare 声明语句
+	stmt, err = db.Prepare("INSERT INTO articles (title, body) VALUES(?,?)")
+	// 例行的错误检测
+	if err != nil {
+		return 0, err
+	}
+
+	// 2. 在此函数运行结束后关闭此语句，防止占用 SQL 连接
+	defer stmt.Close()
+
+	// 3. 执行请求，传参进入绑定的内容
+	rs, err = stmt.Exec(title, body)
+	if err != nil {
+		return 0, err
+	}
+
+	// 4. 插入成功的话，会返回自增 ID
+	if id, err = rs.LastInsertId(); id > 0 {
+		return id, nil
+	}
+
+	return 0, err
 }
 
 func forceHTMLMiddleware(next http.Handler) http.Handler {
@@ -167,6 +236,12 @@ func initDB() {
 	checkError(err)
 }
 
+func checkError(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
 func createTables() {
 	createArticlesSQL := `CREATE TABLE IF NOT EXISTS articles(
 	id bigint(20) PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -178,16 +253,10 @@ func createTables() {
 	checkError(err)
 }
 
-func checkError(err error) {
-	if err != nil {
-		log.Fatal(err)
-	}
-}
-
 func main() {
 
 	initDB()
-	// createTables()
+	createTables()
 
 	router.HandleFunc("/", homeHandler).Methods("GET").Name("home")
 	router.HandleFunc("/about", aboutHandler).Methods("GET").Name("about")
@@ -196,6 +265,7 @@ func main() {
 	router.HandleFunc("/articles", aritlcesIndexHandler).Methods("GET").Name("articles.index")
 	router.HandleFunc("/articles", aritlcesStoreHandler).Methods("POST").Name("articles.store")
 	router.HandleFunc("/articles/create", aritlcesCreateHandler).Methods("GET").Name("articles.create")
+	// router.HandleFunc("/articles/{id:[0-9]+}/edit", aritlcesEditHandler).Methods("GET").Name("articles.edit")
 
 	// 自定义 404 页面
 	router.NotFoundHandler = http.HandlerFunc(notFoundHandler)
