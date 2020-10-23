@@ -12,12 +12,12 @@ func SetupDB() {
 	db := model.ConnectDB()
 
 	// 命令行打印数据库请求的信息
-	// db.LogMode(true)
+	sqlDB, _ := db.DB()
 
 	// 设置最大连接数
-	db.DB().SetMaxOpenConns(100)
+	sqlDB.SetMaxOpenConns(100)
 	// 设置最大空闲连接数
-	db.DB().SetMaxIdleConns(25)
+	sqlDB.SetMaxIdleConns(25)
 	// 设置每个链接的过期时间
-	db.DB().SetConnMaxLifetime(5 * time.Minute)
+	sqlDB.SetConnMaxLifetime(5 * time.Minute)
 }

@@ -18,3 +18,12 @@ func StringToInt(str string) int {
 	}
 	return i
 }
+
+// StringToInt 将字符串转换为 int
+func Uint2String(str string) int {
+	i, err := strconv.Atoi(str)
+	if err != nil {
+		logger.LogError(err)
+	}
+	return i
+}
