@@ -10,6 +10,7 @@ require (
 	github.com/gorilla/mux v1.7.4
 	github.com/imdario/mergo v0.3.11 // indirect
 	github.com/jinzhu/gorm v1.9.16
+	github.com/lexkong/log v0.0.0-20180607165131-972f9cd951fc
 	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/pelletier/go-toml v1.8.1 // indirect
 	github.com/prometheus/common v0.14.0
