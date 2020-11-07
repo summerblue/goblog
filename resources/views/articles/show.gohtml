@@ -1,26 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
+{{define "title"}}
+{{ .Title }}
+{{end}}
 
-<head>
-    <title>{{ .Title }} —— 我的技术博客</title>
-    <style type="text/css">
-        .error {
-            color: red;
-        }
-    </style>
-</head>
+{{define "main"}}
+<div class="col-md-9 blog-main mt-5">
 
-<body>
-    <p>ID： {{ .ID }}</p>
-    <p>标题： {{ .Title }}</p>
-    <p>内容：{{ .Body }}</p>
+    <div class="blog-post bg-white p-5 rounded shadow mb-4">
+      <h3 class="blog-post-title">{{ .Title }}</h3>
+      <p class="blog-post-meta text-secondary">发布于 <a href="" class="font-weight-bold">2020-09-05</a> by <a href="#" class="font-weight-bold">Summer</a></p>
 
-    {{/* 构建删除按钮  */}}
-    {{ $idString := Int64ToString .ID  }}
-    <form action="{{ RouteName2URL "articles.delete" "id" $idString }}" method="post">
-        <button type="submit" onclick="return confirm('删除动作不可逆，请确定是否继续')">删除</button>
-    </form>
+      <hr>
+      {{ .Body }}
 
-</body>
+      {{/* 构建删除按钮  */}}
+      <form class="mt-4" action="{{ RouteName2URL "articles.delete" "id" .GetStringID }}" method="post">
+          <button type="submit" onclick="return confirm('删除动作不可逆，请确定是否继续')">删除</button>
+      </form>
 
-</html>
+    </div><!-- /.blog-post -->
+</div>
+
+{{end}}
