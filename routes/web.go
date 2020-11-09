@@ -27,6 +27,18 @@ func RegisterWebRoutes(r *mux.Router) {
 	r.HandleFunc("/articles/{id:[0-9]+}", ac.Update).Methods("POST").Name("articles.update")
 	r.HandleFunc("/articles/{id:[0-9]+}/delete", ac.Delete).Methods("POST").Name("articles.delete")
 
+	// 用户认证
+	auc := new(controllers.AuthController)
+	r.HandleFunc("/auth/register", auc.Register).Methods("GET").Name("auth.register")
+	r.HandleFunc("/auth/do-register", auc.DoRegister).Methods("POST").Name("auth.doregister")
+	// r.HandleFunc("/auth/login", auc.Login).Methods("GET").Name("auth.login")
+	// r.HandleFunc("/auth/dologin", auc.DoLogin).Methods("POST").Name("auth.dologin")
+	// r.HandleFunc("/auth/doregister", auc.DoRegister).Methods("POST").Name("auth.doregister")
+	// r.HandleFunc("/auth/forget", auc.Forget).Methods("GET").Name("auth.forget")
+	// r.HandleFunc("/auth/forget/verify", auc.Send).Methods("POST").Name("auth.verify")
+	// r.HandleFunc("/auth/reset-password", auc.ResetPassword).Methods("GET").Name("auth.reset-password")
+	// r.HandleFunc("/auth/reset-password/verify", auc.DoResetPassword).Methods("POST").Name("auth.do-reset-password")
+
 	// 静态资源
 	r.PathPrefix("/css/").Handler(http.FileServer(http.Dir("./public")))
 	r.PathPrefix("/js/").Handler(http.FileServer(http.Dir("./public")))
