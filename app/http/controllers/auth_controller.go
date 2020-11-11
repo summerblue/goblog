@@ -42,7 +42,7 @@ func (*AuthController) DoRegister(w http.ResponseWriter, r *http.Request) {
 		_user.Create()
 
 		if _user.ID > 0 {
-			http.Redirect(w, r, "", http.StatusFound)
+			http.Redirect(w, r, "/", http.StatusFound)
 		} else {
 			w.WriteHeader(http.StatusInternalServerError)
 			fmt.Fprint(w, "创建用户失败，请联系管理员")
