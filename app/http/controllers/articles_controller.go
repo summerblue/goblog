@@ -57,6 +57,7 @@ func (*ArticlesController) Index(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprint(w, "500 服务器内部错误")
 	} else {
+
 		// ---  2. 加载模板 ---
 		view.Render(w, view.D{
 			"Articles": articles,

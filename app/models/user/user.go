@@ -2,6 +2,7 @@ package user
 
 import (
 	"goblog/app/models"
+	"goblog/pkg/password"
 )
 
 // User 用户模型
@@ -17,6 +18,6 @@ type User struct {
 }
 
 // ComparePassword 对比密码是否匹配
-func (u User) ComparePassword(password string) bool {
-	return u.Password == password
+func (u User) ComparePassword(_password string) bool {
+	return password.CheckHash(_password, u.Password)
 }

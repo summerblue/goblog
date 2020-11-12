@@ -51,9 +51,15 @@ func Attempt(email string, password string) error {
 	return nil
 }
 
+// Login 登录指定用户
+func Login(_user user.User) {
+	session.Put("uid", _user.GetStringID())
+}
+
 // Logout 退出用户
 func Logout() {
 	session.Forget("uid")
+	User = nil
 }
 
 // Check 检测是否登录
