@@ -3,11 +3,13 @@ module goblog
 go 1.15
 
 require (
+	github.com/coreos/etcd v3.3.25+incompatible
 	github.com/cosmtrek/air v1.21.2 // indirect
 	github.com/creack/pty v1.1.11 // indirect
 	github.com/fatih/color v1.9.0 // indirect
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/gorilla/mux v1.7.4
+	github.com/gorilla/sessions v1.2.1
 	github.com/imdario/mergo v0.3.11 // indirect
 	github.com/jinzhu/gorm v1.9.16
 	github.com/lexkong/log v0.0.0-20180607165131-972f9cd951fc
