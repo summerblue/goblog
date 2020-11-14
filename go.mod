@@ -16,10 +16,14 @@ require (
 	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/pelletier/go-toml v1.8.1 // indirect
 	github.com/prometheus/common v0.14.0
+	github.com/spf13/cast v1.3.1
+	github.com/spf13/viper v1.7.1
 	github.com/stretchr/testify v1.6.1
 	github.com/thedevsaddam/govalidator v1.9.10
+	github.com/totoval/framework v0.11.6
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
 	golang.org/x/sys v0.0.0-20201009025420-dfb3f7c4e634 // indirect
+	gopkg.in/fsnotify.v1 v1.4.7
 	gorm.io/driver/mysql v1.0.3
 	gorm.io/gorm v1.20.5
 )
