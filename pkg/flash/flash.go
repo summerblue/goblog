@@ -8,9 +8,6 @@ import (
 // Flashes Flash 消息数组类型，用以在会话中存储 map
 type Flashes map[string]interface{}
 
-// 允许同时存在多条不同类型的 flash 消息
-var flashes = Flashes{}
-
 // 存入会话数据里的 key
 var flashKey = "_flashes"
 
@@ -55,6 +52,7 @@ func All() Flashes {
 
 // 私有方法，新增一条提示
 func addFlash(key string, message string) {
+	flashes := Flashes{}
 	flashes[key] = message
 	session.Put(flashKey, flashes)
 	session.Save()
