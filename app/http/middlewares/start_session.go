@@ -1,7 +1,6 @@
 package middlewares
 
 import (
-	"goblog/pkg/auth"
 	"goblog/pkg/session"
 	"net/http"
 )
@@ -13,10 +12,7 @@ func StartSession(next http.Handler) http.Handler {
 		// 1. 启动会话
 		session.StartSession(w, r)
 
-		// 2. 初始化认证系统
-		auth.InitAuth()
-
-		// 3. 继续处理接下去的请求
+		// 2. 继续处理接下去的请求
 		next.ServeHTTP(w, r)
 	})
 }

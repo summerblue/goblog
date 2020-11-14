@@ -8,22 +8,25 @@ import (
 	"gorm.io/gorm"
 )
 
-// User 当前会话
-var User *user.User
-
-// InitAuth 初始化认证系统，在中间件中使用
-func InitAuth() {
+func _getUID() string {
 	_uid := session.Get("uid")
 	uid, ok := _uid.(string)
-
 	if ok && len(uid) > 0 {
-		_user, err := user.Get(uid)
+		return uid
+	}
+	return ""
+}
 
+// User 获取登录用户信息
+func User() user.User {
+	uid := _getUID()
+	if len(uid) > 0 {
+		_user, err := user.Get(uid)
 		if err == nil {
-			// 登录用户
-			User = &_user
+			return _user
 		}
 	}
+	return user.User{}
 }
 
 // Attempt 尝试登录
@@ -59,10 +62,9 @@ func Login(_user user.User) {
 // Logout 退出用户
 func Logout() {
 	session.Forget("uid")
-	User = nil
 }
 
 // Check 检测是否登录
 func Check() bool {
-	return User != nil
+	return len(_getUID()) > 0
 }
