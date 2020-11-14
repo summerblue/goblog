@@ -15,9 +15,17 @@ type User struct {
 
 	// gorm:"-" —— 设置 GORM 在读写时略过此字段，仅用于表单验证
 	PasswordComfirm string `gorm:"-" valid:"password_comfirm"`
+
+	// ArticleID uint64 `gorm:"not null;index"`
+	// Article   article.Article
 }
 
 // ComparePassword 对比密码是否匹配
 func (u User) ComparePassword(_password string) bool {
 	return password.CheckHash(_password, u.Password)
+}
+
+// Link 方法用来生成用户链接
+func (u User) Link() string {
+	return ""
 }

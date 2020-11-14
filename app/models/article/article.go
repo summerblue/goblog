@@ -2,6 +2,7 @@ package article
 
 import (
 	"goblog/app/models"
+	"goblog/app/models/user"
 	"goblog/pkg/route"
 	"goblog/pkg/types"
 )
@@ -13,8 +14,8 @@ type Article struct {
 	Title string `gorm:"type:varchar(255);not null;" valid:"title"`
 	Body  string `gorm:"type:longtext;not null;" valid:"body"`
 
-	// UserID uint64 `gorm:"null;index"`
-	// User   user.User
+	UserID uint64 `gorm:"not null;index"`
+	User   user.User
 }
 
 // Link 方法用来生成文章链接
@@ -25,4 +26,9 @@ func (a Article) Link() string {
 // GetStringID 获取 ID 的字符串格式
 func (a Article) GetStringID() string {
 	return types.Uint64ToString(a.ID)
+}
+
+// CreatedAtDate 创建日期
+func (a Article) CreatedAtDate() string {
+	return a.CreatedAt.Format("2006-01-02")
 }
