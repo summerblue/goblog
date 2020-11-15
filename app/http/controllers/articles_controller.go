@@ -5,7 +5,6 @@ import (
 	"goblog/app/models/article"
 	"goblog/app/policies"
 	"goblog/app/requests"
-	"goblog/pkg/flash"
 	"goblog/pkg/route"
 	"goblog/pkg/view"
 	"net/http"
@@ -106,8 +105,7 @@ func (ac *ArticlesController) Edit(w http.ResponseWriter, r *http.Request) {
 
 		// 检查权限
 		if !policies.CanModifyArticle(_article) {
-			flash.Warning("未授权操作！")
-			http.Redirect(w, r, "/", http.StatusFound)
+			ac.ResposeForUnauthorized(w, r)
 		} else {
 			// 4. 读取成功，显示编辑文章表单
 			view.Render(w, view.D{
@@ -135,8 +133,7 @@ func (ac *ArticlesController) Update(w http.ResponseWriter, r *http.Request) {
 
 		// 检查权限
 		if !policies.CanModifyArticle(_article) {
-			flash.Warning("未授权操作！")
-			http.Redirect(w, r, "/", http.StatusForbidden)
+			ac.ResposeForUnauthorized(w, r)
 		} else {
 
 			// 4.1 表单验证
@@ -192,8 +189,7 @@ func (ac *ArticlesController) Delete(w http.ResponseWriter, r *http.Request) {
 
 		// 检查权限
 		if !policies.CanModifyArticle(_article) {
-			flash.Warning("您没有权限执行此操作！")
-			http.Redirect(w, r, "/", http.StatusFound)
+			ac.ResposeForUnauthorized(w, r)
 		} else {
 			// 4. 未出现错误，执行删除操作
 			rowsAffected, err := _article.Delete()

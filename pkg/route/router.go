@@ -1,6 +1,7 @@
 package route
 
 import (
+	"goblog/pkg/config"
 	"goblog/pkg/logger"
 	"net/http"
 
@@ -22,7 +23,7 @@ func Name2URL(routeName string, pairs ...string) string {
 		return ""
 	}
 
-	return url.String()
+	return config.GetString("app.url") + url.String()
 }
 
 // GetRouteVariable 获取 URI 路由参数
