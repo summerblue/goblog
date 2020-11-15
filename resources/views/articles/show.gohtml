@@ -13,10 +13,12 @@
       <hr>
       {{ .Article.Body }}
 
-      <form class="mt-4" action="{{ RouteName2URL "articles.delete" "id" .Article.GetStringID }}" method="post">
-          <button type="submit" onclick="return confirm('删除动作不可逆，请确定是否继续')" class="btn btn-outline-danger btn-sm">删除</button>
-          <a href="{{ RouteName2URL "articles.edit" "id" .Article.GetStringID }}" class="btn btn-outline-secondary btn-sm">编辑</a>
-      </form>
+      {{ if .CanModifyArticle }}
+        <form class="mt-4" action="{{ RouteName2URL "articles.delete" "id" .Article.GetStringID }}" method="post">
+            <button type="submit" onclick="return confirm('删除动作不可逆，请确定是否继续')" class="btn btn-outline-danger btn-sm">删除</button>
+            <a href="{{ RouteName2URL "articles.edit" "id" .Article.GetStringID }}" class="btn btn-outline-secondary btn-sm">编辑</a>
+        </form>
+      {{end}}
 
     </div><!-- /.blog-post -->
 </div>
