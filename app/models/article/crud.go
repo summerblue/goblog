@@ -1,14 +1,12 @@
 package article
 
 import (
-	"fmt"
 	"goblog/pkg/logger"
 	"goblog/pkg/model"
 	"goblog/pkg/pagination"
 	"goblog/pkg/route"
 	"goblog/pkg/types"
-
-	"github.com/vcraescu/go-paginator"
+	"net/http"
 )
 
 // Get 通过 ID 获取文章
@@ -23,35 +21,20 @@ func Get(idstr string) (Article, error) {
 }
 
 // GetAll 获取全部文章
-func GetAll() (pagination.ViewData, error) {
+func GetAll(r *http.Request, perPage int) ([]Article, pagination.ViewData, error) {
 
+	// 1. 初始化分页实例
+	db := model.DB.Model(Article{}).Order("created_at desc")
+	_pager := pagination.New(r, db, route.Name2URL("articles.index"), perPage)
+
+	// 2. 获取视图数据
+	viewData := _pager.Paging()
+
+	// 3. 获取数据
 	var articles []Article
-	query := model.DB.Model(Article{})
-	_paginator := paginator.New(pagination.NewGORMAdapter(query), 2)
-	_paginator.SetPage(7)
+	_pager.Results(&articles)
 
-	url := route.Name2URL("articles.index")
-	view := pagination.NewViewData(_paginator, url)
-
-	pages, _ := view.Pages()
-	fmt.Printf("pages %v \n", pages) // [2 3 4 5 6 7 8 9 10 11]
-
-	next := view.Next()
-	fmt.Printf("next %v \n", next.URL) // 8
-
-	prev, _ := view.Prev()
-	fmt.Printf("prev %v \n", prev) // 6
-
-	current, _ := view.Current()
-	fmt.Printf("current %v \n", current) // 7
-
-	_paginator.Results(&articles)
-
-	// var articles []Article
-	// if err := model.DB.Preload("User").Find(&articles).Error; err != nil {
-	// 	return articles, err
-	// }
-	return view, nil
+	return articles, viewData, nil
 }
 
 // Create 创建文章，通过 article.ID 来判断是否创建成功

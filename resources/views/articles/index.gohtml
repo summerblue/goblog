@@ -19,11 +19,7 @@
 
   {{ end }}
 
-
-  <nav class="blog-pagination mb-5">
-    <a class="btn btn-outline-primary" href="#">下一页</a>
-    <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">上一页</a>
-  </nav>
+  {{template "pagination" .PagerData }}
 
 </div><!-- /.blog-main -->
 {{end}}
