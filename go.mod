@@ -1,4 +1,4 @@
-module github.com/summerblue/goblog
+module goblog
 
 go 1.17
 
