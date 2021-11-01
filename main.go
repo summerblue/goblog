@@ -6,6 +6,7 @@ import (
 )
 
 func handlerFunc(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	if r.URL.Path == "/" {
 		fmt.Fprint(w, "<h1>Hello, 欢迎来到 goblog！</h1>")
 	} else if r.URL.Path == "/about" {
