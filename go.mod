@@ -17,6 +17,7 @@ require (
 	github.com/stretchr/objx v0.1.0 // indirect
 	github.com/stretchr/testify v1.7.0 // indirect
 	github.com/thedevsaddam/govalidator v1.9.10 // indirect
+	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c // indirect
 	gorm.io/driver/mysql v1.1.3 // indirect
 	gorm.io/gorm v1.22.2 // indirect
