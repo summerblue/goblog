@@ -8,9 +8,10 @@
   <div class="p-4 bg-white rounded shadow-sm mb-3">
     <h5>分类</h5>
     <ol class="list-unstyled mb-0">
-      <li><a href="#">未分类</a></li>
-      <li><a href="#">模板</a></li>
-      <li><a href="#">数据库</a></li>
+      {{ range $key, $category := .Categories }}
+        <li><a href="{{ $category.Link }}">{{ $category.Name }}</a></li>
+      {{ end }}
+      <li><a href="{{ RouteName2URL "categories.create" }}">+ 新建分类</a></li>
     </ol>
   </div>
 
