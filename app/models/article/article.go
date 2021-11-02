@@ -18,11 +18,11 @@ type Article struct {
 }
 
 // Link 方法用来生成文章链接
-func (article *Article) Link() string {
+func (article Article) Link() string {
 	return route.Name2URL("articles.show", "id", article.GetStringID())
 }
 
 // CreatedAtDate 创建日期
-func (article *Article) CreatedAtDate() string {
+func (article Article) CreatedAtDate() string {
 	return article.CreatedAt.Format("2006-01-02")
 }
