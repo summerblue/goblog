@@ -29,7 +29,11 @@
       <li><a href="#">关于我们</a></li>
       {{ if .isLogined }}
         <li><a href="{{ RouteName2URL "articles.create" }}">开始写作</a></li>
-        <li><a href="">退出</a></li>
+        <li class="mt-3">
+          <form action="{{ RouteName2URL "auth.logout" }}" method="POST" onsubmit="return confirm('您确定要退出吗？');">
+            <button class="btn btn-block btn-outline-danger btn-sm" type="submit" name="button">退出</button>
+          </form>
+        </li>
       {{ else }}
         <li><a href="{{ RouteName2URL "auth.register" }}">注册</a></li>
         <li><a href="{{ RouteName2URL "auth.login" }}">登录</a></li>
