@@ -1,0 +1,21 @@
+{{ define "pagination" }}
+
+  {{ if .HasPages }}
+    <nav class="blog-pagination mb-5">
+
+      {{ if .HasPrev }}
+        <a class="btn btn-outline-primary" href="{{ .Prev.URL }}" tabindex="-1" aria-disabled="true">上一页</a>
+      {{ else }}
+        <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">上一页</a>
+      {{ end }}
+
+      {{ if .HasNext }}
+        <a class="btn btn-outline-primary" href="{{ .Next.URL }}" tabindex="-1" aria-disabled="true">下一页</a>
+      {{ else }}
+        <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">下一页</a>
+      {{ end }}
+
+    </nav>
+  {{ end }}
+
+{{ end }}
