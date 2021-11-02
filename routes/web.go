@@ -43,6 +43,11 @@ func RegisterWebRoutes(r *mux.Router) {
 	r.PathPrefix("/css/").Handler(http.FileServer(http.Dir("./public")))
 	r.PathPrefix("/js/").Handler(http.FileServer(http.Dir("./public")))
 
+	// 文章分类
+	cc := new(controllers.CategoriesController)
+	r.HandleFunc("/categories/create", middlewares.Auth(cc.Create)).Methods("GET").Name("categories.create")
+	r.HandleFunc("/categories", middlewares.Auth(cc.Store)).Methods("POST").Name("categories.store")
+
 	// --- 全局中间件 ---
 
 	// 开始会话
