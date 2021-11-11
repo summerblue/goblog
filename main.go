@@ -5,6 +5,7 @@ import (
 	"goblog/bootstrap"
 	"goblog/config"
 	c "goblog/pkg/config"
+	"goblog/pkg/logger"
 	"net/http"
 )
 
@@ -20,5 +21,6 @@ func main() {
 	// 初始化路由绑定
 	router := bootstrap.SetupRoute()
 
-	http.ListenAndServe(":"+c.GetString("app.port"), middlewares.RemoveTrailingSlash(router))
+	err := http.ListenAndServe(":"+c.GetString("app.port"), middlewares.RemoveTrailingSlash(router))
+	logger.LogError(err)
 }
