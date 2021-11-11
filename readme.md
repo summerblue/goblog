@@ -27,3 +27,31 @@ Go 非常适用于开发 Web 应用程序，但是因其简单的语言特性，
 我们构建的不是一个玩具项目，而是可直接拿来用在生产环境中，或者作为某个大型项目的地基项目。而构建此项目的知识，你可以放心的在工作生产中使用。
 
 > 讨论请前往：[公告：最适合 Laravel 开发者学习的 Go Web 实战课程](https://learnku.com/go/t/51595)
+
+
+## 运行代码
+
+### 1. 下载代码
+
+```
+git clone https://github.com/summerblue/goblog.git
+```
+
+### 2. 配置环境变量
+
+```
+cd goblog
+cp .env.example .env
+```
+
+使用编辑器打开 .env 文件，并对里面的信息做相应配置，尤其是数据库信息。
+
+### 3. 运行代码
+
+```
+go run .
+```
+
+### 4. 访问 goblog
+
+http://localhost:3000/
