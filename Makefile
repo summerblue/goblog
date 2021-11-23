@@ -22,13 +22,14 @@ deploy:
 
 	@echo "\n--- 部署完毕 ---\n"
 
+.PHONY: clean
 clean:
 	rm -rf tmp/*
 
 nginx-test:
 	ssh root@$(REMOTE) "nginx -t"
 
-task1: task2
+task1: task2 task3
 	@echo "\n--- 执行命令 ---\n"
 	@$(MAKE) task3
 	@echo "\n--- 执行更多命令 ---\n"
