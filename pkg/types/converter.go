@@ -17,6 +17,9 @@ func Uint64ToString(num uint64) string {
 
 // StringToInt 将字符串转换为 int
 func StringToInt(str string) int {
+	if str == "" {
+		return 0
+	}
 	i, err := strconv.Atoi(str)
 	if err != nil {
 		logger.LogError(err)
@@ -26,6 +29,9 @@ func StringToInt(str string) int {
 
 // Uint2String 将字符串转换为 int
 func Uint2String(str string) int {
+	if str == "" {
+		return 0
+	}
 	i, err := strconv.Atoi(str)
 	if err != nil {
 		logger.LogError(err)
