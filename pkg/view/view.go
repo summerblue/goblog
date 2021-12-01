@@ -49,7 +49,8 @@ func RenderTemplate(w io.Writer, name string, data D, tplFiles ...string) {
 	logger.LogError(err)
 
 	// 4. 渲染模板
-	tmpl.ExecuteTemplate(w, name, data)
+	err = tmpl.ExecuteTemplate(w, name, data)
+	logger.LogError(err)
 }
 
 func getTemplateFiles(tplFiles ...string) []string {
