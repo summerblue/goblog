@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"goblog/pkg/database"
 	"goblog/pkg/logger"
 	"goblog/pkg/route"
 	"goblog/pkg/types"
@@ -498,8 +499,8 @@ func (a Article) Delete() (rowsAffected int64, err error) {
 }
 
 func main() {
-	initDB()
-	createTables()
+	database.Initialize()
+	db = database.DB
 
 	route.Initialize()
 	router = route.Router
