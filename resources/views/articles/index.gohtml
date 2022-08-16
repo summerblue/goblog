@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>所有文章 —— 我的技术博客</title>
+    <style type="text/css">.error {color: red;}</style>
+</head>
+<body>
+    <h1>所有文章</h1>
+    <ul>
+        {{ range $key, $article := . }}
+            <li><a  href="{{ $article.Link }}"><strong>{{ $article.ID }}</strong>: {{ $article.Title }}</a></li>
+        {{ end }}
+    </ul>
+</body>
+</html>
