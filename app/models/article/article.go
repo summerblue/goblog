@@ -3,11 +3,14 @@ package article
 import (
 	"goblog/pkg/route"
 	"strconv"
+
+	"goblog/app/models"
 )
 
 // Article 文章模型
 type Article struct {
-	ID    uint64
+	models.BaseModel
+
 	Title string
 	Body  string
 }
