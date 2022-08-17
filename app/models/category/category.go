@@ -14,6 +14,6 @@ type Category struct {
 }
 
 // Link 方法用来生成文章链接
-func (c Category) Link() string {
-	return route.Name2URL("categories.show", "id", c.GetStringID())
+func (category Category) Link() string {
+	return route.Name2URL("categories.show", "id", category.GetStringID())
 }
