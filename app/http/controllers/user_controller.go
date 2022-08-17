@@ -7,18 +7,17 @@ import (
 	"goblog/pkg/view"
 	"net/http"
 
-	"gorm.io/gorm"
-
 	"goblog/app/models/article"
 	"goblog/app/models/user"
 )
 
 // UserController 用户控制器
 type UserController struct {
+	BaseController
 }
 
 // Show 用户个人页面
-func (*UserController) Show(w http.ResponseWriter, r *http.Request) {
+func (uc *UserController) Show(w http.ResponseWriter, r *http.Request) {
 
 	// 1. 获取 URL 参数
 	id := route.GetRouteVariable("id", r)
@@ -28,16 +27,7 @@ func (*UserController) Show(w http.ResponseWriter, r *http.Request) {
 
 	// 3. 如果出现错误
 	if err != nil {
-		if err == gorm.ErrRecordNotFound {
-			// 3.1 数据未找到
-			w.WriteHeader(http.StatusNotFound)
-			fmt.Fprint(w, "404 用户未找到")
-		} else {
-			// 3.2 数据库错误
-			logger.LogError(err)
-			w.WriteHeader(http.StatusInternalServerError)
-			fmt.Fprint(w, "500 服务器内部错误")
-		}
+		uc.ResponseForSQLError(w, err)
 	} else {
 		// ---  4. 读取成功，显示用户文章列表 ---
 		articles, err := article.GetByUserID(_user.GetStringID())
