@@ -18,5 +18,6 @@ require (
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/thedevsaddam/govalidator v1.9.10 // indirect
+	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
