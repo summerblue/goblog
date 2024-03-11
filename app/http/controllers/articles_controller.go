@@ -52,7 +52,6 @@ func (*ArticlesController) Show(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// Index 文章列表页
 func (*ArticlesController) Index(w http.ResponseWriter, r *http.Request) {
 
 	// 1. 获取结果集
