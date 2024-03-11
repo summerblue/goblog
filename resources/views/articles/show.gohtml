@@ -13,8 +13,7 @@
       {{ .Body }}
 
       {{/* 构建删除按钮  */}}
-      {{ $idString := Uint64ToString .ID  }}
-      <form class="mt-4" action="{{ RouteName2URL "articles.delete" "id" $idString }}" method="post">
+      <form class="mt-4" action="{{ RouteName2URL "articles.delete" "id" .GetStringID }}" method="post">
           <button type="submit" onclick="return confirm('删除动作不可逆，请确定是否继续')">删除</button>
       </form>
 
