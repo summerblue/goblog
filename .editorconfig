@@ -1,0 +1,13 @@
+; https://editorconfig.org/
+
+root = true
+
+[*.gohtml]
+; 设定文件编码
+charset = utf-8
+; 移除文件尾部多余的空格
+trim_trailing_whitespace = true
+; 使用空格来做缩进
+indent_style = space
+; 缩进长度为两个空格
+indent_size = 2
