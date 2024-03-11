@@ -50,3 +50,8 @@ func (*CategoriesController) Store(w http.ResponseWriter, r *http.Request) {
 		}, "categories.create")
 	}
 }
+
+// Show 显示分类下的文章列表
+func (*CategoriesController) Show(w http.ResponseWriter, r *http.Request) {
+	//
+}
