@@ -1,20 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>创建文章 —— 我的技术博客</title>
-    <style type="text/css">.error {color: red;}</style>
-</head>
-<body>
-    <form action="{{ .URL }}" method="post">
-        <p><input type="text" name="title" value="{{ .Title }}"></p>
-        {{ with .Errors.title }}
-        <p class="error">{{ . }}</p>
-        {{ end }}
-        <p><textarea name="body" cols="30" rows="10">{{ .Body }}</textarea></p>
-        {{ with .Errors.body }}
-        <p class="error">{{ . }}</p>
-        {{ end }}
-        <p><button type="submit">提交</button></p>
+{{define "title"}}
+创建文章
+{{end}}
+
+{{define "main"}}
+<div class="col-md-9 blog-main">
+  <div class="blog-post bg-white p-5 rounded shadow mb-4">
+
+    <h3>新建文章</h3>
+
+    <form action="{{ RouteName2URL "articles.store" }}" method="post">
+
+      {{template "form-fields" . }}
+
+      <button type="submit" class="btn btn-primary mt-3">提交</button>
+
     </form>
-</body>
-</html>
+
+  </div><!-- /.blog-post -->
+</div>
+
+{{end}}
