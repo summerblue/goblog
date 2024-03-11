@@ -12,28 +12,40 @@
     <div class="form-group row mb-3">
       <label for="name" class="col-md-4 col-form-label text-md-right">姓名</label>
       <div class="col-md-6">
-        <input id="name" type="text" class="form-control" name="name" value="" required="" autofocus="">
+        <input id="name" type="text" class="form-control {{if .Errors.name }}is-invalid {{end}}" name="name" value="{{ .User.Name }}" required="" autofocus="">
+        {{ with .Errors.name }}
+          {{ template "invalid-feedback" . }}
+        {{ end }}
       </div>
     </div>
 
     <div class="form-group row mb-3">
       <label for="email" class="col-md-4 col-form-label text-md-right">E-mail</label>
       <div class="col-md-6">
-        <input id="email" type="email" class="form-control" name="email" value="" required="">
+        <input id="email" type="email" class="form-control {{if .Errors.email }}is-invalid {{end}}" name="email" value="{{ .User.Email }}" required="">
+        {{ with .Errors.email }}
+          {{ template "invalid-feedback" . }}
+        {{ end }}
       </div>
     </div>
 
     <div class="form-group row mb-3">
       <label for="password" class="col-md-4 col-form-label text-md-right">密码</label>
       <div class="col-md-6">
-        <input id="password" type="password" class="form-control" name="password" required="">
+        <input id="password" type="password" class="form-control {{if .Errors.password }}is-invalid {{end}}" name="password" value="{{ .User.Password }}" required="">
+        {{ with .Errors.password }}
+          {{ template "invalid-feedback" . }}
+        {{ end }}
       </div>
     </div>
 
     <div class="form-group row mb-3">
       <label for="password-confirm" class="col-md-4 col-form-label text-md-right">确认密码</label>
       <div class="col-md-6">
-        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required="">
+        <input id="password-confirm" type="password" class="form-control {{if .Errors.password_confirm }}is-invalid {{end}}" name="password_confirm" value="{{ .User.PasswordConfirm }}" required="">
+        {{ with .Errors.password_confirm }}
+          {{ template "invalid-feedback" . }}
+        {{ end }}
       </div>
     </div>
 
